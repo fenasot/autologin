@@ -1,0 +1,8 @@
+# 個資檔
+datas/settings.json
+
+# py暫存檔
+content/__pycache__/
+
+# 處理用的圖片檔
+images/*
