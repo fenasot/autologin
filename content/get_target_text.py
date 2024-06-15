@@ -1,5 +1,3 @@
-# 輸入圖片路徑後，獲取圖片內文字
-
 from PIL import Image
 import pytesseract
 from translate import Translator
@@ -7,9 +5,8 @@ import os
 
 class get_target_text:
   """
-    用於取得圖片內文字
+    輸入圖片路徑後，獲取圖片內文字
   """
-
   def __init__(self, img_path):
     self.img_path = img_path
     # self.text_all = self.__get_text()

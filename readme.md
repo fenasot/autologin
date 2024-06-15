@@ -19,5 +19,9 @@ https://webap.nkust.edu.tw/nkust/
 
 二、直接使用 cmd 執行 start.py，程式將會開始自動執行，直到成功登入或達到嘗試次數上限為止。
 
+![alt text](image-1.png)
 
 
+
+三、細節改動
+暫無

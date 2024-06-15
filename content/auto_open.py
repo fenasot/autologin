@@ -8,27 +8,23 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.alert import Alert
 from selenium.common.exceptions import UnexpectedAlertPresentException, NoAlertPresentException, NoSuchElementException, TimeoutException
 
-
 # 圖片處理
 from PIL import Image
 import io
 import os
-import re
-
-# 網址請求
-import requests
-
-# wait
-import time
 
 # certifi 用於SSL驗證
 import certifi  
 
-# 自定義的庫
+# others
+import requests
+import time
+import re
+
+# 自定義
 from content.get_target_text import get_target_text 
 # from content.settings import user_inputs, settings
 from content.filter_img import filter_img
-
 
 class open_web():
   """
@@ -38,10 +34,8 @@ class open_web():
           retry_interval (float, optional): 失敗後重試的間隔。
           max_retries (int, optional): 最大重試次數。
           verfi_text_chg (str or None, optional): 驗證碼是否需要全部大寫或小寫。
-
   """
   def __init__(self, datas:dict, retry_interval:float = 0.5, max_retries:int = 10, verfi_text_chg:str|None = None) -> None:
-
     # 基本設定
     self.image_folder_path = 'images'
     self.verfi_png_name = 'captcha_image.png'

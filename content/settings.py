@@ -1,10 +1,10 @@
 import json
 
-
-
 # 預載資料設定檔
-# 引導輸入資料並調整為正確資料(整合版本)
 class settings:
+  """
+  引導輸入資料並調整為正確資料(整合版本)
+  """
   def __init__(self):
     
     with open('datas/settings.json','r',encoding="utf-8") as f:
