@@ -5,7 +5,7 @@ https://webap.nkust.edu.tw/nkust/
 
 <h2>使用方式</h2>
 
-一、先在settings.json分別輸入
+一、先將settings_sample.json改名為settings.json，並分別輸入
   1. 網址
   2. 帳號
   3. 密碼

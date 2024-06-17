@@ -95,13 +95,15 @@ class open_web():
     # 確定是否有找到
     if(a_bl):
       return a
-    elif(b_bl):
+    
+    if(b_bl):
       return b
-    # elif(c_bl):
+    
+    # if(c_bl):
     #   return c
-    else:
-      print(f'無法找到元素 "{element}" 。')
-      exit()
+
+    print(f'無法找到元素 "{element}" 。')
+    exit()
 
 
   # 嘗試尋找單一元素
@@ -132,6 +134,7 @@ class open_web():
     WebDriverWait(self.driver, 10).until(
       EC.presence_of_element_located((By.ID, self.datas['acc_id']))
     )
+    print("網頁加載完成")
 
     # 抓element
     username_field = self.try_find(self.datas['acc_id'])
@@ -152,17 +155,15 @@ class open_web():
     ori_path = f'{self.image_folder_path}\{self.verfi_png_name}'
     binary_path = f'{self.image_folder_path}\{self.binary_png}'
     
+    # TEST
     # 修改圖片
     # filter_img(ori_path).gray_img().kernel_img().save_img(binary_path)
     filter_img(ori_path).gray_img_2().save_img(binary_path)
     # filter_img(ori_path).gray_img_2().resize_img().save_img(binary_path)
     # filter_img(ori_path).gray_img_2().gaussian_blur().resize_img().save_img(binary_path)
 
-
     # 取得圖片
-    trans = get_target_text(binary_path)
-    # trans = get_target_text(ori_path)
-    
+    trans = get_target_text(binary_path)    
     captcha_code = trans.get_text()
 
     match self.verfi_text_chg:

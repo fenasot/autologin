@@ -1,5 +1,5 @@
 from content.settings import settings
-from content.auto_open import open_web
+from content.open_web import open_web
 from content.filter_img import filter_img
 
 # 自定義
