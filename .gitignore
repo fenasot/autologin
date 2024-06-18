@@ -1,5 +1,6 @@
 # 個資檔
-datas/settings.json
+!datas/settings_sample.json
+datas/*
 
 # py暫存檔
 content/__pycache__/

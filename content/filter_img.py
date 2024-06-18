@@ -46,11 +46,17 @@ class filter_img:
     return self
 
 
-  # 侵蝕
+  # 侵蝕後膨脹
   def kernel_img(self):
     # ig = cv2.imread(self.img_path, 0)
-    k = np.ones((5,5))
+    k = np.ones((2,2))
     self.image = cv2.morphologyEx(self.image, cv2.MORPH_OPEN, k)
+    return self
+
+  # 侵蝕
+  def kernel_img_2(self):
+    k = np.ones((1,1))
+    self.image = cv2.morphologyEx(self.image,cv2.MORPH_OPEN, k)
     return self
 
 

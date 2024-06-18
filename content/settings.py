@@ -5,9 +5,9 @@ class settings:
   """
   引導輸入資料並調整為正確資料(整合版本)
   """
-  def __init__(self):
+  def __init__(self,json_path):
     
-    with open('datas/settings.json','r',encoding="utf-8") as f:
+    with open(json_path,'r',encoding="utf-8") as f:
       f_data = json.load(f)
       self.default_data = f_data
 

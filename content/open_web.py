@@ -35,11 +35,12 @@ class open_web():
           max_retries (int, optional): 最大重試次數。
           verfi_text_chg (str or None, optional): 驗證碼是否需要全部大寫或小寫。
   """
-  def __init__(self, datas:dict, retry_interval:float = 0.5, max_retries:int = 10, verfi_text_chg:str|None = None) -> None:
+  def __init__(self, datas:dict, retry_interval:float = 0.5, max_retries:int = 10, verfi_text_chg:str|None = None, filter_type:str = "filter_gray") -> None:
     # 基本設定
     self.image_folder_path = 'images'
     self.verfi_png_name = 'captcha_image.png'
     self.binary_png = 'binary_image.png'
+    self.filter_type = filter_type
 
     # 重試次數
     self.max_retries = max_retries
@@ -56,10 +57,10 @@ class open_web():
 
   # 連結網頁
   def link(self):
-    # 初始化 WebDriver
-    # 確保系統上安裝了 Chrome 瀏覽器和相應的 WebDriver
-    # driver = webdriver.Chrome()  
-    # driver.get('http://example.com/login')  
+    """
+    使用前須將電腦畫面比例設為100%，以防止element座標與畫面不符。
+    TODO: 設定自動偵測縮放比例並於自動執行視窗內調整回100%。
+    """
 
     # 瀏覽器
     chrome_options = Options()
@@ -68,42 +69,12 @@ class open_web():
 
     try:
       self.driver.get(self.datas['url'])  
+      # self.driver.set_window_size(1920, 1080)
+      # self.driver.set_window_size(945, 1060)
+      # size = self.driver.get_window_size()
+
     except Exception as e:
       print('開啟網頁失敗')
-
-
-  # 嘗試尋找單一元素(可保有註釋)
-  def try_find_2(self, element):
-    a_bl = b_bl = c_bl = True
-
-    try:
-      a = self.driver.find_element(By.ID, element)
-    except Exception as e:
-      a_bl = False
-
-    try:
-      b = self.driver.find_element(By.NAME, element)
-    except Exception as e:
-      b_bl = False
-
-    # TEST need try, and check answer is single or mutiple
-    # try:
-    #   c = self.driver.find_element(By.CLASS_NAME, element)
-    # except Exception as e:
-    #   c_bl = False
-
-    # 確定是否有找到
-    if(a_bl):
-      return a
-    
-    if(b_bl):
-      return b
-    
-    # if(c_bl):
-    #   return c
-
-    print(f'無法找到元素 "{element}" 。')
-    exit()
 
 
   # 嘗試尋找單一元素
@@ -155,12 +126,8 @@ class open_web():
     ori_path = f'{self.image_folder_path}\{self.verfi_png_name}'
     binary_path = f'{self.image_folder_path}\{self.binary_png}'
     
-    # TEST
     # 修改圖片
-    # filter_img(ori_path).gray_img().kernel_img().save_img(binary_path)
-    filter_img(ori_path).gray_img_2().save_img(binary_path)
-    # filter_img(ori_path).gray_img_2().resize_img().save_img(binary_path)
-    # filter_img(ori_path).gray_img_2().gaussian_blur().resize_img().save_img(binary_path)
+    self.filter_img_type(ori_path, binary_path)
 
     # 取得圖片
     trans = get_target_text(binary_path)    
@@ -181,6 +148,22 @@ class open_web():
     captcha_field = self.try_find(self.datas['verfi_id'])
     captcha_field.send_keys(captcha_code)
     captcha_field.send_keys(Keys.RETURN)
+
+
+  # filter_img_type 控制項
+  def filter_img_type(self, ori_path, binary_path):
+    processor = filter_img(ori_path)
+    methods = self.filter_type.split(',')
+
+    for method in methods:
+      if not hasattr(processor, method):
+        print(f'選擇的 {method} 不存在!')
+        exit()
+
+      call_method = getattr(processor, method)
+      call_method()
+
+    processor.save_img(binary_path)
 
 
   # 切換到frame內
@@ -212,37 +195,6 @@ class open_web():
     filename = self.verfi_png_name
     save_path = os.path.join(self.image_folder_path, filename) 
     im.save(save_path)
-
-
-  # 用url獲取圖片(失敗)
-  def get_verfi_image_2(self, captcha_image):
-    captcha_image_url = captcha_image.get_attribute('src')
-    self.driver.execute_script("window.open('{}');".format(captcha_image_url))
-    
-    # 获取所有窗口句柄
-    all_handles = self.driver.window_handles
-
-    # 切换到新打开的标签页
-    new_window_handle = [handle for handle in all_handles if handle != self.driver.current_window_handle][0]
-    self.driver.switch_to.window(new_window_handle)
-
-    self.driver.close()
-    self.driver.switch_to.window(self.driver.window_handles[0])
-
-    # 下載驗證碼圖片
-    response = requests.get(captcha_image_url, verify=False)
-    
-    self.captcha_image = Image.open(io(response.content))
-    # captcha_image.show() 
-
-    if response.status_code == 200:
-        # 保存图片到本地或者处理图片内容
-        with open("captcha_image.jpg", "wb") as f:
-            f.write(response.content)
-        print("獲取應證圖片成功")
-
-    else:
-        print("獲取驗證圖片失敗:", response.status_code)
 
 
   # 關閉網頁
