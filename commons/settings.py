@@ -1,5 +1,6 @@
-import os
+# import os
 from pathlib import Path
+from pathlib import PurePath
 from configparser import ConfigParser
 # from iniconfig import IniConfig as ini
 # import selenium.webdriver
@@ -8,19 +9,27 @@ from selenium.webdriver.common.by import By
 
 """此文件用來存放全域變數與設定資料"""
 
+
+'''設定共用路徑'''
 p = Path()
-p.cwd()
+p_cwd = p.cwd()
 
+# PACKAGE_PATH = Path.PurePath()  # 當前檔案路徑
+PACKAGE_PATH = str(p_cwd.parent)  # 專案頂層路徑
 
-
-# PACKAGE_PATH = Path.PurePath()
-# PACKAGE_PATH = Path.cwd()
-PACKAGE_PATH = os.getcwd('../')
+COMMONS_PATH = str(p.cwd())  # commons 路徑
+CONFIGS_PATH = str(PurePath(PACKAGE_PATH, 'configs'))
+DATAS_PATH = str(PurePath(PACKAGE_PATH, 'datas'))
+LOGS_PATH = str(PurePath(PACKAGE_PATH, 'logs'))
+SRC_PATH = str(PurePath(PACKAGE_PATH, 'src'))
+# SRC_PATH = str(PurePath(PACKAGE_PATH, 'src'))
+# PACKAGE_PATH = os.getcwd()
 
 
 def aaaaa():
     print(PACKAGE_PATH)
-    print('ssssss', p)
+    print('ssssss', p.cwd())
+    print(CONFIGS_PATH)
     # raise PACKAGE_PATH
 
 
