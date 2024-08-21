@@ -1,5 +1,11 @@
-# 個資檔
-datas/settings.json
+# 機密資料
+configs/*
+datas/*
+logs/*
+*.log
+
+# 範例黨除外
+!datas/settings_sample.json
 
 # py暫存檔
 content/__pycache__/
