@@ -1,3 +1,5 @@
+"""此文件用來存放全域變數、共用路徑與ini設定"""
+
 # import os
 from pathlib import Path
 from pathlib import PurePath
@@ -5,9 +7,6 @@ from configparser import ConfigParser
 # from iniconfig import IniConfig as ini
 # import selenium.webdriver
 from selenium.webdriver.common.by import By
-
-
-"""此文件用來存放全域變數與其他設定資料"""
 
 
 '''全域變數'''
@@ -25,15 +24,21 @@ BY_TYPE = {
 p = Path()
 p_cwd = p.cwd()
 
-# PATH_PACKAGE = Path.PurePath()  # 當前檔案路徑
-PATH_PACKAGE = str(p_cwd.parent)  # 專案頂層路徑
-
-PATH_COMMONS = str(p.cwd())  # commons 路徑
-PATH_CONFIGS = str(PurePath(PATH_PACKAGE, 'configs'))
-PATH_DATAS = str(PurePath(PATH_PACKAGE, 'datas'))
-PATH_LOGS = str(PurePath(PATH_PACKAGE, 'logs'))
-PATH_SRC = str(PurePath(PATH_PACKAGE, 'src'))
 # PATH_PACKAGE = os.getcwd()
+PATH_PACKAGE = str(p_cwd.parent)
+"""專案頂層路徑"""
+PATH_DEFAULT = str(p.cwd())
+"""default 路徑"""
+PATH_CONFIGS = str(PurePath(PATH_PACKAGE, 'configs'))
+"""configs 路徑"""
+PATH_DATAS = str(PurePath(PATH_PACKAGE, 'datas'))
+"""datas 路徑"""
+PATH_TESTS = str(PurePath(PATH_PACKAGE, 'tests'))
+"""tests 路徑"""
+PATH_SRC = str(PurePath(PATH_PACKAGE, 'src'))
+"""src 路徑"""
+PATH_LOGS = str(PurePath(PATH_DATAS, 'logs'))
+"""logs 路徑"""
 
 
 class Readini:

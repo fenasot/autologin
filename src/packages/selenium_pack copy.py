@@ -1,40 +1,40 @@
-# 自動登入
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 
-# 圖片處理
-from PIL import Image
+# py原生
 import io
 import os
-
-# certifi 用於SSL驗證
-# import certifi
-
-# others
-# import requests
 import time
+# import certifi
 # import re
+# import requests
+
+# 圖片處理
+from PIL import Image
 
 # 自定義
 from src.get_target_text import get_target_text
 from src.filter_img import filter_img
+import commons.settings as DF  # default 共用變數
 
 
 class selenium_pack:
     """
         selenium 封裝方法，將selenium的原生方法封裝，讓使用更便利。
 
-        :param: aaa: ddaa
+        TODO: 待修改
+        
+        :param: test: test
 
         Attributes:
             datas (dict): 用於登入的資料。
@@ -52,7 +52,7 @@ class selenium_pack:
     ) -> None:
 
         # 基本設定
-        self.image_folder_path = 'images'
+        self.image_folder_path = f'{DF.PATH_DATAS}\\images'
         self.verfi_png_name = 'captcha_image.png'
         self.binary_png = 'binary_image.png'
         self.filter_type = filter_type
@@ -165,7 +165,7 @@ class selenium_pack:
 
         match self.verfi_text_chg:
             case 'upper':
-                captcha_code = captcha_code.upder()
+                captcha_code = captcha_code.upper()
             case 'lower':
                 captcha_code = captcha_code.lower()
 

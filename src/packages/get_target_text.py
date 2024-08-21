@@ -10,7 +10,11 @@ class get_target_text:
     """
     def __init__(self, img_path):
         self.img_path = img_path
-        # self.text_all = self.__get_text()
+        self.text_all = self.__get_text()
+
+    # 執行
+    def get_text(self):
+        return self.__get_text()
 
     # 獲取圖片內文字
     def __get_text(self):
@@ -36,10 +40,9 @@ class get_target_text:
 
         text: str = OCR.image_to_string(img, lang='eng', config=text_config)
 
-        # TEST
+        # TEST:
         # text = re.sub(r'[\s]+','',captcha_code)
         text = text.replace(' ', '').replace('\n', '')
-        # text = text.replace(' ', '')
 
         return text
 
@@ -55,8 +58,3 @@ class get_target_text:
         total = len(text_all)
         for n in range(0, total, 500):
             print(self.__translate_text(text_all[n:n+500]))
-
-    # 執行 
-    def get_text(self):
-        return self.__get_text()
-
