@@ -25,7 +25,7 @@ from PIL import Image
 # 自定義
 from src.get_target_text import get_target_text
 from src.filter_img import filter_img
-import commons.settings as DF  # default 共用變數
+import commons.default as DF  # default 共用變數
 
 
 class selenium_pack:
