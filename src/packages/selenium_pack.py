@@ -1,3 +1,5 @@
+from xml.dom.minidom import Element
+from matplotlib.pyplot import locator_params
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -25,7 +27,8 @@ from PIL import Image
 # 自定義
 from src.packages.get_target_text import get_target_text
 from src.packages.filter_img import filter_img
-import defaults.defaults as DF  # default 共用變數
+from src.defaults.log_setting import log
+import src.defaults.defaults as DF  # default 共用變數
 
 
 class selenium_pack:
@@ -33,7 +36,7 @@ class selenium_pack:
         selenium 封裝方法，將selenium的原生方法封裝，讓使用更便利。
 
         TODO: 待修改
-        
+
         :param: test: test
 
         Attributes:
@@ -135,25 +138,18 @@ class selenium_pack:
         exit()
 
     # 取得欄位
-    def find_element(self):
+    def find_element(self, locator_data: str) -> WebElement:
+
+        type, locator = locator_data
         # 等待加載完成
-        WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, self.datas['acc_id']))
-        )
-        print("網頁加載完成")
+        try:
+            element = wait(self.driver, 10).until(
+                EC.presence_of_element_located((DF.BY_TYPE[type], locator))
+            )
+        except TimeoutException:
+            log.debug(f'找不到元素，{locator_data}')
 
-        # 抓element
-        username_field = self.try_find(self.datas['acc_id'])
-        password_field = self.try_find(self.datas['pwd_id'])
-        captcha_image = self.try_find(
-            self.datas['verfi_img_id'])  # 替換為驗證碼圖片元素的 ID
-
-        # 鍵入值
-        username_field.send_keys(self.datas['acc'])
-        password_field.send_keys(self.datas['pwd'])
-
-        # 驗證
-        self.get_verfi_image(captcha_image)
+        return element
 
     # 輸入驗證碼
     def try_verfi(self):

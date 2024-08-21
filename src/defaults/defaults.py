@@ -1,10 +1,11 @@
-"""此文件用來存放全域變數、共用路徑與ini設定"""
+"""此文件用來存放全域變數、共用路徑與ini、yaml設定"""
 
 # import os
 from pathlib import Path
 from pathlib import PurePath
 from configparser import ConfigParser
 # from iniconfig import IniConfig as ini
+import yaml
 # import selenium.webdriver
 from selenium.webdriver.common.by import By
 
@@ -20,7 +21,7 @@ BY_TYPE = {
 }
 
 
-'''設定共用路徑'''
+# 設定共用路徑
 p = Path()
 p_cwd = p.cwd()
 
@@ -73,3 +74,17 @@ class Readini:
         """確認option是否存在"""
         if self.ini.has_option(section, option) is False:
             raise AttributeError(f'ini option ({option}) not found.')
+
+
+class Readyaml:
+    """讀取yaml檔案
+
+    使用load_yaml並輸入要讀取yaml檔名即可
+    """
+    def __init__(self) -> None:
+        pass
+
+    def load_yaml(self, file_path: str) -> dict:
+        """路徑固定為{\\data\\yaml\\}"""
+        with open(f'{PATH_DATAS}\\yaml\\{file_path}', 'r', encoding='utf-8') as file:
+            return yaml.safe_load(file)

@@ -6,8 +6,18 @@
 
 二、提供自動登入網站、驗證碼辨識功能。
 
+
 測試網址:
 https://webap.nkust.edu.tw/nkust/
+
+
+<h2>當前目標</h2>
+是讓使用者只需複製網頁頁面的元素css_selector、xpath等資料，並直接帶入已撰寫好的function就可直接執行測試
+
+![alt text](/doc/copy_dom_path.png)
+![alt text](/doc/yaml_example.png)
+![alt text](/doc/testcase_exampe.png)
+
 
 <h2>版本需求</h2>
 
@@ -19,24 +29,9 @@ selenium 4.21.0
 
 <h2>使用方式</h2>
 
-一、
-<!-- 一、先將settings_sample.json改名為settings.json，並分別輸入
-  1. 網址
-  2. 帳號
-  3. 密碼
-  4. 帳號輸入欄位的id或name
-  5. 密碼輸入欄位的id或name
-  6. 驗證碼圖片的id或name
-  7. 驗證碼輸入欄位的id或name
-  8. 帳密欄位若被包裝在iframe內，則輸入iframe的id或name
+開始: 直接執行main.py即可開始測試
 
-![alt text](/doc/image-2.png)
+修改設定: 直接修改configs/configs.ini的[commons]內容，細節如下圖
+![alt text](/doc/ini_settings.png)
 
-二、直接使用 cmd 執行 start.py，程式將會開始自動執行，直到成功登入或達到嘗試次數上限為止。
-
-![alt text](/doc/image-1.png)
-
-
-
-三、細節改動
-暫無 -->
+後續待更新
